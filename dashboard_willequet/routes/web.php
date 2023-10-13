@@ -28,11 +28,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
+    
     Route::prefix('/clients')
     ->name('clients')
     ->group(function(){
         Route::get('/', [ClientController::class, 'index'])->name('.index');
+        Route::patch('/{id}', [ClientController::class, 'update'])->name('.update');
+        Route::delete('/{id}', [ClientController::class, 'destroy'])->name('.destroy');
+        Route::post('/', [ClientController::class,'update'])->name('.create');
     });
 });
 

@@ -11,7 +11,7 @@ class ClientRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -26,6 +26,8 @@ class ClientRequest extends FormRequest
             'name' => ['required', 'max:255'],
             'address' => ['required', 'max:255'],
             'email' => ['email', 'required', 'max:255'],
+            'averageAmount' => ['max:255'],
+            'description' => ['max:255'],
             'telephone' => ['required', 'max:255']
         ];
     }
