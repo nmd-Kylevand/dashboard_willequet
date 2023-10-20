@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('address');
             $table->string('type')->nullable();
-            $table->string('averageAmount')->nullable();
             $table->string('email');
             $table->string('telephone');
             $table->text('description');
