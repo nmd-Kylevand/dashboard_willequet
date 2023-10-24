@@ -21,10 +21,8 @@ class ClientFactory extends Factory
             'name' => fake()->name(),
             'address' => fake()->address(),
             'type' => fake()->mimeType(),
-            'averageAmount' => fake()->numberBetween(0,200),
             'email' => fake()->unique()->safeEmail(),
             'telephone' => fake()->e164PhoneNumber(),
-            'description' => fake()->text(50)
         ];
     }
 }

@@ -17,6 +17,5 @@ class Client extends Model
         'averageAmount',
         'email',
         'telephone',
-        'description'
     ];
 }

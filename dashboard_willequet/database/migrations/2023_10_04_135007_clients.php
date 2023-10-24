@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('type')->nullable();
             $table->string('email');
             $table->string('telephone');
-            $table->text('description');
             $table->timestamps();
         });
     }

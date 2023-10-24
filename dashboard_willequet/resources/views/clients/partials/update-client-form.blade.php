@@ -1,7 +1,7 @@
 
 <!-- Modal toggle -->
 
-  <button data-modal-target="staticModal{{$client->id}}" data-modal-toggle="staticModal{{$client->id}}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+  <button data-modal-target="staticModal{{$client->id}}" data-modal-toggle="staticModal{{$client->id}}" class="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
         <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
       </svg>
@@ -58,11 +58,7 @@
                         <x-input-error class="mt-2" :messages="$errors->get('type')" />
                     </div>
 
-                    <div>
-                        <x-input-label for="averageAmount" :value="__('Gemiddelde')" />
-                        <x-text-input id="averageAmount" name="averageAmount" type="text" class="mt-1 block w-full" :value="old('averageAmount', $client->averageAmount)"  autocomplete="averageAmount" />
-                        <x-input-error class="mt-2" :messages="$errors->get('averageAmount')" />
-                    </div>
+                   
 
                     <div>
                         <x-input-label for="telephone" :value="__('Telefoonnr')" />
@@ -71,16 +67,10 @@
                 
                     </div>
 
-                    <div>
-                        <x-input-label for="description" :value="__('Commentaar')" />
-                        <x-text-input id="description" name="description" type="text" class="mt-1 block w-full" :value="old('description', $client->description)"  autocomplete="description" />
-                        <x-input-error class="mt-2" :messages="$errors->get('description')" />
-                
-                    </div>
-                    <button type="submit">test</button>
-                    {{-- <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+
+                    <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
                         <x-primary-button>{{ __('Save') }}</x-primary-button>
-                    </div> --}}
+                    </div>
                 </form>
               </div>
               <!-- Modal footer -->

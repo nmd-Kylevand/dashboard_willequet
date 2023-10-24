@@ -27,7 +27,6 @@ class ClientRequest extends FormRequest
             'address' => ['required', 'max:255'],
             'email' => ['email', 'required', 'max:255'],
             'averageAmount' => ['max:255'],
-            'description' => ['max:255'],
             'telephone' => ['required', 'max:255']
         ];
     }

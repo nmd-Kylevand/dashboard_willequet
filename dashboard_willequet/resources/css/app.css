@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+tr{
+    border-bottom: 1px solid rgba(0,0,0,0.12);
+}
+@layer base {
+    tr th {
+      @apply p-3;
+    }
+    tr td {
+      @apply p-3;
+    }
+  }

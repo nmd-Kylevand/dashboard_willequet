@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->integer('loss');
-            $table->text('description');
             $table->timestamps();
         });
     }
