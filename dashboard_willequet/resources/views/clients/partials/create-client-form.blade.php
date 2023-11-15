@@ -33,7 +33,7 @@
                     <div>
                         <x-input-error class="mt-2" :messages="$errors->get('color')" />
                         <x-input-label for="color" :value="__('Kleur')"/>
-                        <select name="color" id="color" class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm'" autofocus>
+                        <select name="color" id="color" class="mt-1 block w-full" autofocus>
                             <option value="" disabled selected>Kies een kleur</option>
                             <option value="#E7F05A">Geel</option>
                             <option value="#7D7D7D">Grijs</option>
@@ -45,6 +45,17 @@
                             <option value="#C93434">Rood</option>
                             <option value="#E655CA">Roze</option>
                             <option value="#F7FAFC">Wit</option>
+                        </select>   
+                    </div>
+                    <div>
+                        <x-input-error class="mt-2" :messages="$errors->get('category')" />
+                        <x-input-label for="category" :value="__('Categorie')"/>
+                        <select name="category" id="category" class="mt-1 block w-full" autofocus>
+                            <option value="" disabled selected>Kies een categorie</option>
+                            <option value="scholen">Scholen</option>
+                            <option value="speelscholen">Speelscholen</option>
+                            <option value="oud">Oud</option>
+                            <option value="overig">Overig</option>
                         </select>   
                     </div>
                     <div>
@@ -65,11 +76,7 @@
                         <x-input-error class="mt-2" :messages="$errors->get('address')" />
                     </div>
 
-                    <div>
-                        <x-input-label for="type" :value="__('Type')" />
-                        <x-text-input id="type" name="type" type="text" class="mt-1 block w-full" :value="old('type')"  autocomplete="type" />
-                        <x-input-error class="mt-2" :messages="$errors->get('type')" />
-                    </div>
+                    
 
 
                     <div>

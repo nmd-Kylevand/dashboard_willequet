@@ -30,9 +30,31 @@
                     @csrf
                     @method('patch')
                     <div>
-                        <x-input-label for="color" :value="__('Kleur')" />
-                        <x-text-input id="color" name="color" type="text" class="mt-1 block w-full" :value="old('color', $client->color)"  autofocus autocomplete="color" />
                         <x-input-error class="mt-2" :messages="$errors->get('color')" />
+                        <x-input-label for="color" :value="__('Kleur')"/>
+                        <select name="color" id="color" class="mt-1 block w-full" autofocus>
+                            <option value="{{$client->color}}"  selected>{{$client->color}}</option>
+                            <option value="#E7F05A">Geel</option>
+                            <option value="#7D7D7D">Grijs</option>
+                            <option value="#4A7937">Groen</option>
+                            <option value="#45CEE6">Lichtblauw</option>
+                            <option value="#6FE21B">Lichtgroen</option>
+                            <option value="#E89A17">Oranje</option>
+                            <option value="#BA9FD2">Paars</option>
+                            <option value="#C93434">Rood</option>
+                            <option value="#E655CA">Roze</option>
+                            <option value="#F7FAFC">Wit</option>
+                        </select>   
+                    </div>
+                    <div>
+                        <x-input-error class="mt-2" :messages="$errors->get('category')" />
+                        <x-input-label for="category" :value="__('Categorie')"/>
+                        <select name="category" id="category" class="mt-1 block w-full" autofocus>
+                            <option value="{{$client->category}}"  selected>{{$client->category}}</option>
+                            <option value="scholen">Scholen</option>
+                            <option value="speelscholen">Speelscholen</option>
+                            <option value="oud">Oud</option>
+                        </select>   
                     </div>
                     <div>
                         <x-input-label for="name" :value="__('Naam')" />
