@@ -23,16 +23,15 @@
 </thead>
 <tbody>
     @foreach ($orderSearch as $order)
-    
         <tr>
-            <td>{{$order->name}}</td>
+            <td>{{$order->name  ?? 'Add a client'}}</td>
              
-                <td id="printTable">{{$order->clientsOrders[0]->pivot->date ?? 'Add a client'}}</td>
-                <td></td>
-                <td></td>
-                
+                <td id="printTable">{{request()->query('search')  ?? 'Add a client'}}</td>
+                <td>{{$order->clientsOrders()->sum('persons')}}</td>
+                <td>{{$order->clientsOrders()->sum('totalAmount')}}</td>
                
-                <td><a class="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded " href="{{ url('orders/'. $order->clientsOrders[0]->pivot->ingredient_id) }}">Detail</a></td>
+                <td><a class="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded " href="{{ url('orders/'. $order->clientsOrders[0]->pivot->ingredient_id . '-' .request()->query('search') ) }}">Detail</a></td>
+                <td>@include('orders.partials.make-copy', ['order' => $order])</td>
         </tr>
             
 

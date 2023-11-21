@@ -6,7 +6,7 @@
 @endsection
 
 @section('searchForm')
-  @include('amounts.partials.search-amount-form')
+  @include('amounts.partials.search-amount-client-form')
 
 @endsection
 @section('content')

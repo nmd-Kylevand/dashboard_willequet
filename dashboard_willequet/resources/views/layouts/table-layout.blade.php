@@ -15,7 +15,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 print:max-w-none print:sm:px-0 print:lg:px-0">
             <div class=" bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <table id="printTable" class="table-auto w-full  border-seperate border-spacing-y-6">
+                    <table id="printTable" class="table-auto w-full  border-seperate border-spacing-y-6 mb-24">
                         @yield('content')
                         
                       </table>

@@ -24,10 +24,10 @@ class ClientRequest extends FormRequest
         return [
             'color' => ['required', 'max:8'],
             'name' => ['required', 'max:255'],
-            'address' => ['required', 'max:255'],
-            'email' => ['email', 'required', 'max:255'],
+            'address' => ['max:255'],
+            'email' => ['nullable','email', 'max:255'],
             'averageAmount' => ['max:255'],
-            'telephone' => ['required', 'max:255'],
+            'telephone' => ['max:255'],
             'category' => ['max:100']
         ];
     }

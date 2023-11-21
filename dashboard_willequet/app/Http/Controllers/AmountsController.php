@@ -28,22 +28,37 @@ class AmountsController extends Controller
     public function assign(Request $request){
         $clientId = $request->clientId;
         $ingredientId = $request->ingredientId;
+        $comment = $request->comment;
 
+       
         $client = Client::find($clientId);
         if($client->ingredients()->wherePivot('ingredients_id',$ingredientId)->exists()){
-            $client->ingredients()->detach($ingredientId, ['amount' => $request->amount]);
+            $client->ingredients()->detach($ingredientId, ['amount' => $request->amount, 'comment' => $comment ?? ""]);
         }
-        $client->ingredients()->attach($ingredientId, ['amount' => $request->amount]);
+        $client->ingredients()->attach($ingredientId, ['amount' => $request->amount, 'comment' => $comment ?? ""]);
 
         return redirect()->to('amounts/'.$clientId);
 
         
     }
+
     public function search(Request $request){
-        $clientsSearch = Client::where('name','like','%'.$request->search.'%')->get();
+        $client = Client::find($request->clientId);
+
+        $ingredientSearch = Ingredient::where('name','like','%'.$request->search.'%')->get();
     
             return view('amounts.search', [
-                'clientsSearch' => $clientsSearch
+                'ingredientSearch' => $ingredientSearch,
+                'client' => $client
+            ]);
+         
+    }
+    public function searchClient(Request $request){
+
+        $clientSearch = Client::where('name','like','%'.$request->search.'%')->get();
+    
+            return view('amounts.search-client', [
+                'clientSearch' => $clientSearch,
             ]);
          
     }

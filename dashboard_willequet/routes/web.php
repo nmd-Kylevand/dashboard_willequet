@@ -4,6 +4,7 @@ use App\Http\Controllers\AmountsController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\IngredientsController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderOverViewController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -57,6 +58,7 @@ Route::middleware('auth')->group(function () {
     ->group(function(){
         Route::get('/', [AmountsController::class, 'index'])->name('.index');
         Route::get('/search', [AmountsController::class, 'search'])->name('.search');
+        Route::get('/search/clients', [AmountsController::class, 'searchClient'])->name('.searchClient');
         Route::get('/{id}', [AmountsController::class,'indexDetail'])->name('.indexDetail');
         Route::post('/', [AmountsController::class, 'assign'])->name('.assign');
 
@@ -67,9 +69,18 @@ Route::middleware('auth')->group(function () {
     ->group(function(){
         Route::get('/', [OrderController::class, 'index'])->name('.index');
         Route::get('/search',[OrderController::class,'search'])->name('.search');
+        Route::post('/search', [OrderController::class,'copy'])->name('.copy');
         Route::post('/', [OrderController::class, 'create'])->name('.create');
-        Route::get('/{id}', [OrderController::class, 'orderDetail'])->name('.detail');
-        Route::post('/{id}', [OrderController::class, 'save'])->name('.save');
+        Route::post('/{id}-{date}', [OrderController::class, 'save'])->name('.save');
+        Route::get('/{id}-{date}', [OrderController::class, 'orderDetail'])->name('.detail');
+        route::delete('/{id}-{date}', [OrderController::class, 'delete'])->name('.delete');
+    });
+
+    Route::prefix('/orderOverview')
+    ->name('orderOverview')
+    ->group(function(){
+        Route::get('/', [OrderOverViewController::class, 'index'])->name('.index');
+        Route::get('/search',[OrderOverViewController::class, 'search'])->name('.search');
     });
 });
 

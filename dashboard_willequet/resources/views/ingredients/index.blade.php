@@ -15,7 +15,7 @@
 @endsection
 @section('content')
 
-<thead>
+<thead class="mt-5">
     <tr class="text-left print:hidden">
       <th>Naam</th>
       <th>Verlies</th>
@@ -24,8 +24,8 @@
   <tbody>
       @foreach ($ingredients as $ingredient)
           <tr>
-              <td id="printTable"><span class="print:z-0">{{$ingredient->name}}</span></td>
-              <td class="print:hidden">{{$ingredient->loss}}</td>
+              <td id="printTable"><span class="print:z-0">{{ucfirst($ingredient->name)}}</span></td>
+              <td class="print:hidden">{{$ingredient->loss ?? '0'}}%</td>
               <td class="print:hidden">
                 @include('ingredients.partials.update-ingredient-form')                                       
               </td>
@@ -37,4 +37,8 @@
           </tr>
       @endforeach
   </tbody>
+  <div class="mb-5">
+    {{$ingredients->links()}}
+
+  </div>
 @endsection

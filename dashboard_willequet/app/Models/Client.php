@@ -22,7 +22,7 @@ class Client extends Model
     
     public function ingredients()
     {
-        return $this->belongsToMany(Ingredient::class, 'clients_ingredients', 'clients_id', 'ingredients_id')->withPivot('amount')->withTimestamps();
+        return $this->belongsToMany(Ingredient::class, 'clients_ingredients', 'clients_id', 'ingredients_id')->withPivot('amount','comment')->withTimestamps();
     }
 
     public function ingredientOrders(){

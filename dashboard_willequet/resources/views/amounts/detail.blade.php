@@ -15,20 +15,23 @@
    </a>
 @endsection
 @section('searchForm')
-  @include('clients.partials.search-client-form')
+  @include('amounts.partials.search-amount-form', [
+    'clientId' => request()->id
+  ])
 
 @endsection
 @section('content')
 <thead>
   <tr class="print:hidden">
-    <th class="text-left" >Ingredient</th>
-    <th class="text-end">Hoeveelheid per persoon</th>
+    <th class="text-left">Ingredient</th>
   </tr>
 </thead>
 <tbody>
    @foreach ($assignedIngredients as $assignedIngredient)
    <tr>
     <td class="print:hidden ">{{$assignedIngredient->name}}</td>
+    
+    </td>
     <td class="print:hidden ">
          <form  method="post" action="{{ route('amounts.assign')}}">
                 @csrf
@@ -39,9 +42,15 @@
                 <div>
                     <x-text-input id="amount" name="clientId" type="number" class="hidden" :value="$client->id"/>
                 </div>
+                <div>
+                    <x-input-label for="comment" :value="__('Commentaar')" />
+                    <x-text-input id="comment" name="comment" type="text" class="mt-1 block w-full" :value="$assignedIngredient->pivot->comment"  autofocus autocomplete="name" />
+                    <x-input-error class="mt-2" :messages="$errors->get('comment')" />
+                </div>
+                <div class="mt-5">
+                    <x-input-label for="amount" :value="__('Hoeveelheid')" />
 
-                <div class="justify-end  flex	">
-                    <x-text-input id="amount" min="0.01" step="0.01" name="amount"  type="number" class="mt-1 block w-1/4 mr-5" :value="$assignedIngredient->pivot->amount"  autofocus autocomplete="amount" />
+                    <x-text-input id="amount" min="0.001" step="0.001" name="amount"  type="number" class="mt-1 block !w-2/4 " :value="$assignedIngredient->pivot->amount"  autofocus autocomplete="amount" />
                     <x-input-error class="mt-2" :messages="$errors->get('amount')" />
                     <button  class="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -59,6 +68,7 @@
     @foreach ($unassignedIngredients as $ingredient)
         <tr>
             <td class="print:hidden ">{{$ingredient->name}}</td>
+            
             <td class="print:hidden ">
                  <form  method="post" action="{{ route('amounts.assign')}}">
                         @csrf
@@ -69,9 +79,15 @@
                         <div>
                             <x-text-input id="amount" name="clientId" type="number" class="hidden" :value="$client->id"/>
                         </div>
+                        <div>
+                            <x-input-label for="comment" :value="__('Commentaar')" />
+                            <x-text-input id="comment" name="comment" type="text" class="mt-1 block w-full" :value="$client->comment"  autofocus autocomplete="name" />
+                            <x-input-error class="mt-2" :messages="$errors->get('comment')" />
+                        </div>
+                        <div class="mt-5 ">
+                            <x-input-label for="amount" :value="__('Hoeveelheid')" />
 
-                        <div class="justify-end  flex	">
-                            <x-text-input id="amount" min="0.01" step="0.01" name="amount"  type="number" class="mt-1 block w-1/4 mr-5" :value="old('amount')"  autofocus autocomplete="amount" />
+                            <x-text-input id="amount" min="0.01" step="0.01" name="amount"  type="number" class="mt-1 block !w-2/4 " :value="old('amount')"  autofocus autocomplete="amount" />
                             <x-input-error class="mt-2" :messages="$errors->get('amount')" />
                             <button  class="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">

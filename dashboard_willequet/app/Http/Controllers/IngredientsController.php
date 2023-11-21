@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 class IngredientsController extends Controller
 {
     public function index(){
-        $ingredients = Ingredient::all()->sortDesc();
+        $ingredients = Ingredient::paginate(25);
         return view('ingredients.index', [
             'ingredients' => $ingredients
         ]);

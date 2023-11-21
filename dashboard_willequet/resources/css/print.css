@@ -22,4 +22,10 @@
     #clientsButtons{
         display: none;
     }
+    #test{
+        display: none;
+    }
+    #orderDetailTitle{
+        display: inline;
+    }
 }

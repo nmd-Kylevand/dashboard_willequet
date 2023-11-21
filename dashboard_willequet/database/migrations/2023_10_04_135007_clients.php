@@ -15,10 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('color');
             $table->string('name');
-            $table->string('address');
-            $table->string('type')->nullable();
-            $table->string('email');
-            $table->string('telephone');
+            $table->string('address')->nullable();
+            $table->string('email')->nullable();
+            $table->string('telephone')->nullable();
             $table->timestamps();
         });
     }

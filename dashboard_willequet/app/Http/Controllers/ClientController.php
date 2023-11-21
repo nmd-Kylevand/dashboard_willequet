@@ -19,7 +19,6 @@ class ClientController extends Controller
 
     public function create(ClientRequest $request){
         Client::create($request->all());
-
         return Redirect::route('clients.index');
     }
 
