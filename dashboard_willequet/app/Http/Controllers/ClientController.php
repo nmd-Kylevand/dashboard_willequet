@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Redirect;
 class ClientController extends Controller
 {
     public function index(){
-        $clients = Client::all()->sortDesc();
+        $clients = Client::paginate(25);
         return view('clients.index', [
             'clients' => $clients
         ]);

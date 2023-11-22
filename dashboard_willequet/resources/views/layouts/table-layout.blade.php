@@ -25,8 +25,25 @@
         </div>
     </div>
       <script>
+       
         function printPage() {
+            // var x = document.getElementById("lijst");
+            //     if (x.classList.contains('hidden')) {
+            //         x.classList.remove('hidden')
+            //     } else {
+            //         x.classList.add('hidden')
+            //     }
             window.print();
         }
+        function printEtiquet(){
+            var x = document.getElementById("etiquet");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+            window.print();
+        }
+       
     </script>
 </x-app-layout>

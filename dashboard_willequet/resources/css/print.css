@@ -8,6 +8,13 @@
         print-color-adjust: exact;
         
     }
+    tr{
+        border: none;
+        width: 100px!important;
+    }
+    td{
+        width: 100px !important;
+    }
     #printTable span{
         position: relative;
         z-index: 5;
@@ -27,5 +34,25 @@
     }
     #orderDetailTitle{
         display: inline;
+        font-size: 1.6em;
     }
+    
+    .orderDetailprint{
+        display: inline !important;
+    }
+    .orderDetailprint li{
+        margin-bottom: 2px;
+    }
+    
+    .orderDetailprint span{
+        position: relative;
+        z-index: 5;
+        margin-right: 10px;
+    }
+  
+    .numbersSpan{
+        margin-left: 10px;
+    }
+    
+
 }

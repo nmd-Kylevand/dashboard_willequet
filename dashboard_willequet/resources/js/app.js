@@ -5,16 +5,7 @@ import Alpine from 'alpinejs';
 window.Alpine = Alpine;
 
 Alpine.start();
-
-$("select").on("focus", function(){
-    this.size = 5;
+$(document).ready(function() {
+    $('.client_select').select2();
 });
 
-$("select").on("change", function(){
-    this.blur();
-});
-
-$("select").on("blur", function(){
-    this.size = 1;
-    this.blur();
-});

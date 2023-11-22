@@ -38,6 +38,7 @@ class OrderController extends Controller
     }
 
     public function save(Request $request){
+        
         $clientIds = $request->clientId;
         $ingredientId = $request->ingredientId;
         $amounts = $request->persons;
@@ -47,18 +48,19 @@ class OrderController extends Controller
         $totalAmount = array_map(function($app, $amount) {
             return $app * $amount;
         }, $amountPerPerson, $amounts);
-
-        dd($request);
-
-        $ingredient = Ingredient::find($ingredientId);
-        for ($i=0; $i < count($clientIds); $i++) { 
-            if($ingredient->clientsOrders()->wherePivot('clients_id',$clientIds[$i])->exists()){
-            
-                $ingredient->clientsOrders()->detach($clientIds[$i],['persons' => $amounts[$i], 'date' => $request->date, 'totalAmount' => $totalAmount[$i], 'cups' => $cups[$i]]);
-    
+        
+        
+            $ingredient = Ingredient::find($ingredientId);
+            for ($i=0; $i < count($clientIds); $i++) { 
+                if($ingredient->clientsOrders()->wherePivot('clients_id',$clientIds[$i])->exists()){
+                
+                    $ingredient->clientsOrders()->detach($clientIds[$i],['persons' => $amounts[$i], 'date' => $request->date, 'totalAmount' => $totalAmount[$i], 'cups' => $cups[$i]]);
+        
+                }
+                $ingredient->clientsOrders()->attach($clientIds[$i],['persons' => $amounts[$i], 'date' => $request->date, 'totalAmount' => $totalAmount[$i], 'cups' => $cups[$i]]);
             }
-            $ingredient->clientsOrders()->attach($clientIds[$i],['persons' => $amounts[$i], 'date' => $request->date, 'totalAmount' => $totalAmount[$i], 'cups' => $cups[$i]]);
-        }
+        
+      
        
         
         
@@ -110,15 +112,22 @@ class OrderController extends Controller
         $orderSearch = $ingredient->clientsOrders()->wherePivot('date', $request->currentDate)->wherePivot('ingredient_id', $request->ingredientId)
         ->get();
 
-        dd($orderSearch);
+    }
+
+    public function searchAmounts(Request $request){
+        
+        $currentClient = Client::find($request->client);
+        $clientsIngredients = $currentClient->ingredientOrders()->where('date', $request->currentDate)->get();
+
+        return view('orders.client-amount', compact('clientsIngredients', 'currentClient'));
     }
 
     public function delete(Request $request){
-        $id = $request->clientIdRequest;
-        $date = $request->dateRequest;
-        $client = Client::find($id);
-        $client->ingredientOrders()->wherePivot('date', $date)->wherePivot('id', $id)->detach();
+        $id = $request->ingredientId;
+        $date = $request->date;
+        $client = Ingredient::find($id);
+        $client->clientsOrders()->where('date', $date)->detach();
 
-        return redirect()->back();
+        return redirect()->to('orders/');
     }
 }

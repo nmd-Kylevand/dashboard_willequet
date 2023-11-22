@@ -1,7 +1,7 @@
 
 <!-- Modal toggle -->
 
-<button data-modal-target="createModal" data-modal-toggle="createModal" class="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded flex">
+<button data-modal-target="createModal" data-modal-toggle="createModal" class="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4 mx-4 rounded flex">
     
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
         <path stroke-linecap="round" stroke-linejoin="round" d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z" />
@@ -41,7 +41,7 @@
                     <div>
                         <x-input-error class="mt-2" :messages="$errors->get('client')" />
                         <x-input-label for="client" :value="__('Klant')"/>
-                        <select name="client" id="client" class="mt-1 block w-full border-gray-300  focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm'" autofocus>
+                        <select name="client" class="client_select" style="width: 100%; height: 250px;" id="client" class="mt-1  !w-full border-gray-300  focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm'" autofocus>
                             <option value="" disabled selected>Kies een klant</option>
                             @foreach ($clientsForForm as $client)
                                 <option value="{{$client->id}}">{{$client->name}}</option>
