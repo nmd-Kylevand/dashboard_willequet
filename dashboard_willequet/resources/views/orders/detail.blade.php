@@ -5,7 +5,7 @@
     </h2>
 @endsection
 @section('goBack')
-<a href="{{ URL::previous() }}" class="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded flex" id="button">
+<a href="/orders" class="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded flex" id="button">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
         <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
       </svg>
@@ -63,7 +63,6 @@
     <tbody class="detailOrderBody print:hidden">
         <form id="amount-form"  method="post" action="{{ route('orders.save', ['id' => request()->id, 'date' => request()->date]);}}">
         @foreach ($clients as $client)
-
             <tr>
                 <td id="printTable">
                    <p style="background-color: {{$client->color ?? ''}}" id="nameColor" class="inline-block h-6 w-6 border-2 mr-4"></p><span class="print:z-0">{{$client->name ?? ''}}</span>
@@ -77,8 +76,10 @@
                     <td class="text-end">{{$client->totalAmount}}</td>
                     <td>
                         <div>
-                                <x-input-error class="mt-2" :messages="$errors->get('category')" />
-                                <select form="amount-form" data-child-height=150 name="category[]" id="category" class="category mt-1 block w-full" autofocus>
+                            <input type="hidden" name="hidCflag" id="hidCflag" value="" />
+
+                                {{-- <x-input-error class="mt-2" :messages="$errors->get('category')" /> --}}
+                                <select  name="category[]" id="category"  class="category mt-1 block w-full" autofocus>
                                     <option
                                     
                                     value="{{$client->cups}}" selected>@switch($client->cups)
@@ -104,30 +105,63 @@
                                         Kies bakjes
 
                                     @endswitch</option>
-                                    <option value="1cup" data-image="{{ asset('/images/1cup.svg') }}">1 Bakje </option>
-                                    <option value="2cups" data-image="{{ asset('/images/2cups.svg') }}">2 Bakjes</option>
-                                    <option value="2cups1small1big" data-image="{{ asset('/images/1small1big.svg') }}">2 bakjes (1 klein - 1 groot)</option>
-                                    <option value="3cups" data-image="{{ asset('/images/3cups.svg') }}">3 bakjes</option>
-                                    <option value="4cups" data-image="{{ asset('/images/4cups.svg') }}">4 bakjes</option>
-                                    <option value="6cups" data-image="{{ asset('/images/6cups.svg') }}">6 bakjes</option>
+                                    <option value="1cup" data-imagesrc="{{ asset('/images/1cup.svg')}}"><div class="p-5 m-5" style="background-image:url({{ asset('/images/1cup.svg') }})">1 Bakje<div></option>
+                                    <option value="2cups" data-imagesrc="{{ asset('/images/2cups.svg') }}">2 Bakjes</option>
+                                    <option value="2cups1small1big" data-imagesrc="{{ asset('/images/1small1big.svg') }}">2 bakjes (1 klein - 1 groot)</option>
+                                    <option value="3cups" data-imagesrc="{{ asset('/images/3cups.svg') }}">3 bakjes</option>
+                                    <option value="4cups" data-imagesrc="{{ asset('/images/4cups.svg') }}">4 bakjes</option>
+                                    <option value="6cups" data-imagesrc="{{ asset('/images/6cups.svg') }}">6 bakjes</option>
                                 </select>   
-                            
+                                @php
+                                    $cups= 
+                                    [
+                                        [
+                                            'id' => '1001',
+                                            'name' => 'Adam Nsiah',
+                                            'picture' => "{{ asset('/images/1cup.svg')}}"
+                                        ],
+                                        [
+                                            'id' => '1005',
+                                            'name' => 'Alfred Rowe',
+                                            'picture' => "{{ asset('/images/2cups.svg') }}"
+                                        ],
+                                        [
+                                            'id' => '1002',
+                                            'name' => 'Abdul Razak Ibrahim',
+                                            'picture' => "{{ asset('/images/1small1big.svg') }}"
+                                        ],
+                                        [
+                                            'id' => '1003',
+                                            'name' => 'Michael K. Ocansey',
+                                            'picture' => "{{ asset('/images/3cups.svg') }}"
+                                        ],
+                                        [
+                                            'id' => '1004',
+                                            'name' => 'Michael Sarpong',
+                                            'picture' => "{{ asset('/images/4cups.svg') }}"
+                                        ],
+                                    ]
+                                @endphp
+                                {{-- <x-bladewind.select
+                                    name="cups"
+                                    placeholder="Assign task to"
+                                    labelKey="name"
+                                    valueKey="id"
+                                    imageKey="picture"
+                                    :data="$cups" /> --}}
+                                
+                                    
+                                    {{-- <x-bladewind.input/> --}}
                         </div> 
                     </td> 
                     
                     <td class="print:hidden">
-                        {{-- <form action="{{ route('orders.delete', ['id' => request()->id, 'date' => request()->date]);}}" method="post">
-                        @csrf
+                        
 
-                        @method('delete')
-                        <input type="text" name="clientId" value="{{$client->id}}" class="hidden">
-                        <input type="text" name="date" value="{{$client->date}}" class="hidden">
-                        <input type="text" name="category" value="{{$client->cups}}" class="hidden">
-                        <input type="text" name="amountForOne" value="{{$client->amount}}" class="hidden">
-                        <input type="text" name="personForOne" value="{{$client->persons}}" class="hidden">
-                        <button type="submit" name="delete" value="Delete">Delete</button>
-                    </form> --}}
-
+                        <button type="submit" name="delete" value="{{$client->clients_id}}" class=" bg-red-700 hover:bg-red-900 text-white font-bold py-2 px-4 mr-5 rounded flex"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                            </svg></button>
+                       
                       </td>
     
             </tr>
@@ -135,7 +169,10 @@
         
     @endforeach
 </form>
-
+<form method="POST" id="delete-form" action="{{ route('orders.deleteById', ['id' => request()->id, 'date' => request()->date]);}}">
+                {{csrf_field()}}
+                <input type="hidden" name="_method" value="DELETE">
+            </form>
 
     </tbody>
     <ul class="orderDetailprint print:inline hidden">

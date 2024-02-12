@@ -27,20 +27,27 @@
       <script>
        
         function printPage() {
-            // var x = document.getElementById("lijst");
-            //     if (x.classList.contains('hidden')) {
-            //         x.classList.remove('hidden')
-            //     } else {
-            //         x.classList.add('hidden')
-            //     }
+            var y = document.getElementById("etiquet");
+            window.addEventListener("beforeprint", (event) => {
+                y.classList.add("hideEtiq");
+            });
+            window.addEventListener("afterprint", (event) => {
+                y.classList.remove("hideEtiq");
+                y.classList.add("showEtiq");
+            });
             window.print();
         }
         function printEtiquet(){
             var x = document.getElementById("etiquet");
+            var y = document.getElementById("lijst");
+            y.style.display = "none";
+
+            console.log(y);
                 if (x.style.display === "none") {
                     x.style.display = "block";
                 } else {
                     x.style.display = "none";
+
                 }
             window.print();
         }

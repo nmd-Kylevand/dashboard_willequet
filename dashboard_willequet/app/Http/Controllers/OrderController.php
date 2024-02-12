@@ -43,8 +43,19 @@ class OrderController extends Controller
         $ingredientId = $request->ingredientId;
         $amounts = $request->persons;
         $date = $request->date;
+        // dd($request);
         $cups = $request->category ?? "";
         $amountPerPerson = $request->amountPerPerson;
+
+        if($request->delete){
+            $id = (int)$request->delete;
+            $client = Client::find($id);
+            $ingredient = Ingredient::find($ingredientId);
+            $ingredient->clientsOrders()->detach($id);
+            return redirect()->to('orders/'.$ingredientId.'-'.$date);
+
+        }
+
         $totalAmount = array_map(function($app, $amount) {
             return $app * $amount;
         }, $amountPerPerson, $amounts);
@@ -123,11 +134,15 @@ class OrderController extends Controller
     }
 
     public function delete(Request $request){
-        $id = $request->ingredientId;
+        $id = $request->id;
         $date = $request->date;
         $client = Ingredient::find($id);
+        dd($client);
         $client->clientsOrders()->where('date', $date)->detach();
 
         return redirect()->to('orders/');
+    }
+    public function deleteById(Request $request){
+
     }
 }

@@ -74,11 +74,7 @@
                         <x-input-error class="mt-2" :messages="$errors->get('address')" />
                     </div>
 
-                    <div>
-                        <x-input-label for="type" :value="__('Type')" />
-                        <x-text-input id="type" name="type" type="text" class="mt-1 block w-full" :value="old('type', $client->type)"  autocomplete="type" />
-                        <x-input-error class="mt-2" :messages="$errors->get('type')" />
-                    </div>
+   
 
                    
 

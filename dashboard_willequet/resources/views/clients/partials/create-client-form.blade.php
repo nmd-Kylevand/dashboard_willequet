@@ -33,7 +33,7 @@
                     <div>
                         <x-input-error class="mt-2" :messages="$errors->get('color')" />
                         <x-input-label for="color" :value="__('Kleur')"/>
-                        <select name="color" id="color" class="mt-1 block w-full" autofocus>
+                        <select name="color" id="color" class="mt-1 block w-full border-gray-300  focus:border-indigo-500 focus:ring-indigo-500  rounded-md shadow-sm" autofocus>
                             <option value="" disabled selected>Kies een kleur</option>
                             <option value="#E7F05A">Geel</option>
                             <option value="#7D7D7D">Grijs</option>
@@ -50,7 +50,7 @@
                     <div>
                         <x-input-error class="mt-2" :messages="$errors->get('category')" />
                         <x-input-label for="category" :value="__('Categorie')"/>
-                        <select name="category" id="category" class="mt-1 block w-full" autofocus>
+                        <select name="category" id="category" class="mt-1 block w-full border-gray-300  focus:border-indigo-500 focus:ring-indigo-500  rounded-md shadow-sm" autofocus>
                             <option value="" disabled selected>Kies een categorie</option>
                             <option value="scholen">Scholen</option>
                             <option value="speelscholen">Speelscholen</option>

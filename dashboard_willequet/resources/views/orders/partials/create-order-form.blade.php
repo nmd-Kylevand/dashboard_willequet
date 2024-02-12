@@ -39,7 +39,7 @@
                     <div>
                         <x-input-error class="mt-2" :messages="$errors->get('ingredient')" />
                         <x-input-label for="ingredient" :value="__('Ingrediënt')"/>
-                        <select name="ingredient" id="ingredient" class="mt-1 block w-full border-gray-300   focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm'" autofocus>
+                        <select class="client_select" style="width: 100%;" name="ingredient" id="ingredient" class="mt-1 block w-full border-gray-300  focus:border-indigo-500 focus:ring-indigo-500  rounded-md shadow-sm" autofocus>
                             <option value="" disabled selected>Kies een Ingredient</option>
                             @foreach ($ingredients as $ingredient)
                                 <option value="{{$ingredient->id}}">{{$ingredient->name}}</option>
@@ -51,7 +51,7 @@
                     <div>
                         <x-input-error class="mt-2" :messages="$errors->get('client')" />
                         <x-input-label for="client" :value="__('Klant')"/>
-                        <select name="client" id="client" class="mt-1 block w-full border-gray-300  focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm'" autofocus>
+                        <select class="client_select" style="width: 100%; " name="client" id="client" class="mt-1 block w-full border-gray-300  focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm'" autofocus>
                             <option value="" disabled selected>Kies een klant</option>
                             @foreach ($clients as $client)
                                 <option value="{{$client->id}}">{{$client->name}}</option>
@@ -64,7 +64,7 @@
                     <div>
                         <x-input-error class="mt-2" :messages="$errors->get('categories')" />
                         <x-input-label for="categories" :value="__('Kies een categorie')"/>
-                        <select name="categories" id="categories" class="mt-1 block w-full border-gray-300  focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm'" autofocus>
+                        <select  name="categories" id="categories" class="mt-1 block w-full border-gray-300  focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm'" autofocus>
                             <option value="" disabled selected>Kies een categorie</option>
                             <option value="scholen">Scholen</option>
                             <option value="speelscholen">Speelscholen</option>

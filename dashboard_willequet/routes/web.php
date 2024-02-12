@@ -20,12 +20,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/', function () {
+//         Route::get('/', [ClientController::class, 'index']);
+// })->middleware(['auth', 'verified'])->name('.index');
 
 
 Route::middleware('auth')->group(function () {
@@ -75,6 +75,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/{id}-{date}', [OrderController::class, 'save'])->name('.save');
         Route::get('/{id}-{date}', [OrderController::class, 'orderDetail'])->name('.detail');
         Route::delete('/{id}-{date}', [OrderController::class, 'delete'])->name('.delete');
+        Route::delete('/{id}->{date}', [OrderController::class, 'deleteById'])->name('.deleteById');
     });
 
     Route::prefix('/orderOverview')

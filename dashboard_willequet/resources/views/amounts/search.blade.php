@@ -44,7 +44,7 @@
                         </div>
 
                         <div class="justify-end  flex	">
-                            <x-text-input id="amount" min="0.001" step="0.001" name="amount"  type="number" class="mt-1 block w-1/4 mr-5" :value="old('amount')"  autofocus autocomplete="amount" />
+                            <x-text-input id="amount" max=500 step=0.001  name="amount"  type="number" class="mt-1 block w-1/4 mr-5" :value="old('amount')"  autofocus autocomplete="amount" />
                             <x-input-error class="mt-2" :messages="$errors->get('amount')" />
                             <button  class="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">

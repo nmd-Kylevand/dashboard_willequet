@@ -37,8 +37,21 @@
         font-size: 1.6em;
     }
     
-    .orderDetailprint{
+    .orderDetailprint {
         display: inline !important;
+        
+      
+    }
+    .orderDetailprint li{
+        display: flex;
+        
+    }
+
+    .orderDetailEtiq{
+        display: inline !important;
+    }
+    .orderDetailEtiq h1{
+        font-size: 200px;
     }
     .orderDetailprint li{
         margin-bottom: 2px;
@@ -54,5 +67,13 @@
         margin-left: 10px;
     }
     
-
+    #etiquet h1{
+        font-size: 25rem;
+    }
+    .hideEtiq{
+        display: none !important;
+    }
+    .showEtiq{
+        display: inline;
+    }
 }

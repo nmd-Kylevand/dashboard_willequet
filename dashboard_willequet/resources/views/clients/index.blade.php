@@ -39,9 +39,10 @@
             </td>
         </tr>
     @endforeach
+    <div class="mb-5">
+      {{$clients->links()}}
+    
+    </div>
 </tbody>
-<div class="mb-5">
-  {{$clients->links()}}
 
-</div>
 @endsection

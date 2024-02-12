@@ -41,7 +41,7 @@
                     <div>
                         <x-input-error class="mt-2" :messages="$errors->get('client')" />
                         <x-input-label for="client" :value="__('Klant')"/>
-                        <select name="client" class="client_select" style="width: 100%; height: 250px;" id="client" class="mt-1  !w-full border-gray-300  focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm'" autofocus>
+                        <select name="client"  style="width: 100%; " id="client" class="mt-1 client_select !w-full border-gray-300  focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm'" autofocus>
                             <option value="" disabled selected>Kies een klant</option>
                             @foreach ($clientsForForm as $client)
                                 <option value="{{$client->id}}">{{$client->name}}</option>
