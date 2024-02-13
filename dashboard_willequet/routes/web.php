@@ -73,6 +73,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/search', [OrderController::class,'copy'])->name('.copy');
         Route::post('/', [OrderController::class, 'create'])->name('.create');
         Route::post('/{id}-{date}', [OrderController::class, 'save'])->name('.save');
+        Route::post('/{id}-{date}', [OrderController::class, 'saveMultiple'])->name('.saveMultiple');
         Route::get('/{id}-{date}', [OrderController::class, 'orderDetail'])->name('.detail');
         Route::delete('/{id}-{date}', [OrderController::class, 'delete'])->name('.delete');
         Route::delete('/{id}->{date}', [OrderController::class, 'deleteById'])->name('.deleteById');

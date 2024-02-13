@@ -49,7 +49,8 @@
                 </div>
                 <div class="mt-5">
                     <x-input-label for="amount" :value="__('Hoeveelheid')" />
-                    <input name="amount"  type="number" step="any"  class="mt-1 block !w-2/4" value="{{$assignedIngredient->pivot->amount}}" >
+                    <div class="flex">
+                    <input name="amount"  type="number" step="any"  class="mt-1 block mr-10 !w-2/4 border-gray-300  focus:border-indigo-500 focus:ring-indigo-500  rounded-md shadow-sm" value="{{$assignedIngredient->pivot->amount}}" >
 
                     {{-- <x-text-input id="amount"  step="any" name="amount"  type="number" class="mt-1 block !w-2/4 " :value="$assignedIngredient->pivot->amount"  autofocus autocomplete="amount" /> --}}
                     <x-input-error class="mt-2" :messages="$errors->get('amount')" />
@@ -60,6 +61,8 @@
                           
                         
                     </button>
+                    </div>
+                    
                 </div>       
             </form>                                    
     </td>
@@ -85,19 +88,22 @@
                             <x-text-input id="comment" name="comment" type="text" class="mt-1 block w-full" :value="$client->comment"  autofocus autocomplete="name" />
                             <x-input-error class="mt-2" :messages="$errors->get('comment')" />
                         </div>
-                        <div class="mt-5 ">
+                        <div class="mt-5">
                             <x-input-label for="amount" :value="__('Hoeveelheid')" />
-                            <input name="amount"  type="number" step="any"  class="mt-1 block !w-2/4 ">
+                            <div class="flex">
+                                <input name="amount"  type="number" step="any"  class="mt-1 mr-10 block !w-2/4 border-gray-300  focus:border-indigo-500 focus:ring-indigo-500  rounded-md shadow-sm">
 
-                            {{-- <x-text-input id="amount" min="0.01" step="0.01" name="amount"  type="number" class="mt-1 block !w-2/4 " :value="old('amount')"  autofocus autocomplete="amount" /> --}}
-                            <x-input-error class="mt-2" :messages="$errors->get('amount')" />
-                            <button  class="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                                  </svg>
-                                  
-                                
-                            </button>
+                                {{-- <x-text-input id="amount" min="0.01" step="0.01" name="amount"  type="number" class="mt-1 block !w-2/4 " :value="old('amount')"  autofocus autocomplete="amount" /> --}}
+                                <x-input-error class="mt-2" :messages="$errors->get('amount')" />
+                                <button  class="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                                      </svg>
+                                      
+                                    
+                                </button>
+                            </div>
+                         
                         </div>       
                     </form>                                    
             </td>

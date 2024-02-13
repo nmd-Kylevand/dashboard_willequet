@@ -109,26 +109,21 @@
   @endforeach
 </ul>
 <ul id="etiquet" class="orderDetailEtiq hidden">
+  <div id="etiquetDetail" class="grid grid-cols-2">
   @foreach ($orderSearch as $client)
-  <div id="etiquetDetail" class="grid grid-cols-2  w-full">
-  @foreach ($client->clientsOrders as $item)
-    <div class="flex flex-col w-full p-6 gap-8 ">
-      <p class="text-lg">
-        <span style="background-color: {{$item->color ?? ''}}" class="print:z-0 p-1">{{Str::upper($item->name) ?? ''}}</span>-{{$client->clientsOrders[0]->pivot->date}}<br/>{{$client->name}}
-    </p>
-    <div class="flex flex-col gap-2">
-      
-
-      <p class="md:text-base">
-        {{$item->pivot->persons ?? 0}}
-
+    @foreach ($client->clientsOrders as $item)
+      <div class="flex flex-col w-full p-6 gap-8 ">
+        <p class="text-lg">
+          <span style="background-color: {{$item->color ?? ''}}" class="print:z-0 p-1">{{Str::upper($item->name) ?? ''}}</span>-{{$client->clientsOrders[0]->pivot->date}}<br/>{{$client->name}}
       </p>
+      <div class="flex flex-col gap-2">
+        <p class="md:text-base">
+          {{$item->pivot->persons ?? 0}}
+        </p>
+      </div>
     </div>
-  </div>
-  
+    @endforeach
   @endforeach
   <div>
-  
-  @endforeach
 </ul>
 @endsection

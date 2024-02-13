@@ -112,46 +112,7 @@
                                     <option value="4cups" data-imagesrc="{{ asset('/images/4cups.svg') }}">4 bakjes</option>
                                     <option value="6cups" data-imagesrc="{{ asset('/images/6cups.svg') }}">6 bakjes</option>
                                 </select>   
-                                @php
-                                    $cups= 
-                                    [
-                                        [
-                                            'id' => '1001',
-                                            'name' => 'Adam Nsiah',
-                                            'picture' => "{{ asset('/images/1cup.svg')}}"
-                                        ],
-                                        [
-                                            'id' => '1005',
-                                            'name' => 'Alfred Rowe',
-                                            'picture' => "{{ asset('/images/2cups.svg') }}"
-                                        ],
-                                        [
-                                            'id' => '1002',
-                                            'name' => 'Abdul Razak Ibrahim',
-                                            'picture' => "{{ asset('/images/1small1big.svg') }}"
-                                        ],
-                                        [
-                                            'id' => '1003',
-                                            'name' => 'Michael K. Ocansey',
-                                            'picture' => "{{ asset('/images/3cups.svg') }}"
-                                        ],
-                                        [
-                                            'id' => '1004',
-                                            'name' => 'Michael Sarpong',
-                                            'picture' => "{{ asset('/images/4cups.svg') }}"
-                                        ],
-                                    ]
-                                @endphp
-                                {{-- <x-bladewind.select
-                                    name="cups"
-                                    placeholder="Assign task to"
-                                    labelKey="name"
-                                    valueKey="id"
-                                    imageKey="picture"
-                                    :data="$cups" /> --}}
-                                
-                                    
-                                    {{-- <x-bladewind.input/> --}}
+                               
                         </div> 
                     </td> 
                     

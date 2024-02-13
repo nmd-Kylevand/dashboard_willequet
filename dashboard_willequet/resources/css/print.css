@@ -49,6 +49,7 @@
 
     .orderDetailEtiq{
         display: inline !important;
+        width: 100%;
     }
     .orderDetailEtiq h1{
         font-size: 200px;

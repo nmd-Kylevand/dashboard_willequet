@@ -35,7 +35,7 @@
     </tr>
     </thead>
     <tbody class="detailOrderBody print:hidden">
-        {{-- <form id="amount-form"  method="post" action="{{ route('orders.save', ['id' => request()->id, 'date' => request()->date]);}}"> --}}
+        <form id="amount-form"  method="post" action="{{ route('orders.saveMultiple', ['id' => request()->client, 'date' => request()->currentDate]);}}">
         @foreach ($clientsIngredients as $client)
             @dump($client);
             <tr>
@@ -49,10 +49,10 @@
                             @csrf
                             @method('post')
                             <div>
-                                <x-text-input id="ingredientId" name="ingredientId" type="number" class="hidden" :value="$client->id ?? ''"/>
+                                <x-text-input id="ingredientId" name="ingredientId[]" type="number" class="hidden" :value="$client->id ?? ''"/>
                             </div>
                             <div>
-                                <x-text-input id="clientId" name="clientId[]" type="number" class="hidden" :value="$currentClient->id ?? ''"/>
+                                <x-text-input id="clientId" name="clientId" type="number" class="hidden" :value="$currentClient->id ?? ''"/>
                             </div>
                             <div>
                                 <x-text-input id="amountPerPerson" name="amountPerPerson[]" type="number" class="hidden" :value="$amountPerPerson ?? ''"/>
@@ -126,7 +126,7 @@
         
         
     @endforeach
-{{-- </form> --}}
+</form>
 
 
     </tbody>

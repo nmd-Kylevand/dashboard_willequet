@@ -79,6 +79,10 @@ class OrderController extends Controller
         return redirect()->to('orders/'.$ingredientId.'-'.$date);
     }
 
+    public function saveMultiple(Request $request){
+            dd($request);
+    }
+
     public function create(Request $request){
         $clientId = $request->client;
         $ingredientId = $request->ingredient;
