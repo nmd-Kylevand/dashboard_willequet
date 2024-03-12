@@ -17,7 +17,7 @@
               <!-- Modal header -->
               <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
                   <h2>Maak een kopie naar een andere datum</h2>
-                  <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="createModal">
+                  <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="copyModal">
                       <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                       </svg>
@@ -29,7 +29,6 @@
                   <form method="post" action="{{ route('orders.copy')}}" class="mt-6 space-y-6">
                     @csrf
                     @method('post')
-                    @dump($order)
 
                     <div>
                         <x-text-input id="ingredientId" name="ingredientId" type="text" class="hidden" :value="$order->id"  autofocus autocomplete="name" />
@@ -41,7 +40,7 @@
                     <div>
                         <x-input-label for="date" :value="__('Nieuwe datum')" />
                         <input onfocus="this.showPicker()" class="border-2 border-gray-300 bg-white h-10 !pr-24  rounded-lg text-sm focus:outline-none"
-                        type="date" name="date" placeholder="date" value="old('email')">
+                        type="date" name="date" placeholder="date" value="old('date')">
                     </div>
 
                     <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">

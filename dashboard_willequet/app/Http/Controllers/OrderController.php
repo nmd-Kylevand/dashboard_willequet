@@ -12,8 +12,8 @@ use Illuminate\Support\Facades\Redirect;
 class OrderController extends Controller
 {
     public function index(){
-        $clients = Client::all()->sortDesc();
-        $ingredients = Ingredient::all()->sortDesc();
+        $clients = Client::orderBy('name')->get();
+        $ingredients = Ingredient::orderBy('name')->get();
 
         // $orders = Client::with('ingredientOrders')->get();
         $orders = Ingredient::has('clientsOrders')->get();
@@ -32,6 +32,7 @@ class OrderController extends Controller
         ->rightJoin('clients_ingredients', 'clients.id', "=", "clients_ingredients.clients_id")
         ->where('clients_ingredients.ingredients_id', $id)
         ->select('clients.*',  'ingredient_orders.*', 'clients_ingredients.*')
+        ->groupBy('clients.name')
         ->get();
         
         return view('orders.detail', compact('clients','ingredientForForm', 'clientsForForm'));
@@ -46,6 +47,7 @@ class OrderController extends Controller
         // dd($request);
         $cups = $request->category ?? "";
         $amountPerPerson = $request->amountPerPerson;
+        
 
         if($request->delete){
             $id = (int)$request->delete;
@@ -80,7 +82,21 @@ class OrderController extends Controller
     }
 
     public function saveMultiple(Request $request){
-            dd($request);
+        $client = Client::find($request->clientId);
+        $ingredientArr = $request->ingredientId;
+        $amounts = $request->persons;
+        $date = $request->date;
+        $cups = $request->category;
+        for($counter = 0; $counter < count($ingredientArr); $counter++){
+            DB::table('ingredient_orders')
+                ->where('clients_id', $request->clientId)
+                ->where('ingredient_id', $ingredientArr[$counter])
+                ->update(['persons' => $amounts[$counter]]);
+        }
+       
+
+        return redirect()->back();
+
     }
 
     public function create(Request $request){
@@ -89,36 +105,63 @@ class OrderController extends Controller
         $category = $request->categories;
         $date = $request->date;
 
-
+        $client = Client::find($clientId);
+        
         $ingredient = Ingredient::find($ingredientId);
+        $clientIngr = $ingredient->clients()->get();
+      
 
-        if($category){
-            $categorizedClients = Client::where('category', $category)->get();
-            foreach ($categorizedClients as $client) {
-                $ingredient->clientsOrders()->attach($client->id, ['date' => $request->date]);
-
+            if($category){
+                $categorizedClients = Client::where('category', $category)->get();
+                foreach ($categorizedClients as $client) {
+                    if($clientIngr->contains('name',$client->name)){
+                      $ingredient->clientsOrders()->attach($client->id, ['date' => $request->date]);
+                    }
+                }
+            } else{
+                if($clientIngr->contains('name',$client->name)){
+                    $ingredient->clientsOrders()->attach($clientId, ['date' => $request->date]);
+                    return redirect()->to('orders/'.$ingredientId.'-'.$date);
+                }else{
+                    return redirect()->to('orders/'.$ingredientId.'-'.$date)->withErrors(['msg' => 'De geselecteerde klant heeft nog geen gemiddeld aantal voor dit ingrediënt, gelieve dit eerst toe te voegen.']);
+        
+                };    
             }
-        } else{
-            $ingredient->clientsOrders()->attach($clientId, ['date' => $request->date]);
-        }
+            return redirect()->to('orders/'.$ingredientId.'-'.$date);
 
-        return redirect()->to('orders/'.$ingredientId.'-'.$date);
-    }
+    
+        }
+        
+    
 
     public function search(Request $request){
-        $clients = Client::all()->sortDesc();
-        $ingredients = Ingredient::all()->sortDesc();
+        $clients = Client::orderBy('name')->get();
+        $ingredients = Ingredient::orderBy('name')->get();
         
         $orderSearch = Ingredient::whereHas('clientsOrders', function($query) use($request){
             $query->where('ingredient_orders.date','like','%'.$request->search.'%');
-        })->get();
+        })
+        ->get();
+
+        $orderSearchEtiq = DB::table('ingredient_orders')
+        ->where('date', $request->search)
+        ->join('clients','ingredient_orders.clients_id','=','clients.id')
+        ->join('ingredients', 'ingredient_orders.ingredient_id', '=', 'ingredients.id')
+        ->rightJoin('clients_ingredients', function($join){
+            $join->on('ingredient_orders.clients_id', '=', 'clients_ingredients.clients_id');
+            $join->on('ingredient_orders.ingredient_id', '=', 'clients_ingredients.ingredients_id');
+        })
+        ->select('clients.name', 'clients.color', 'ingredients.name AS ingredientName', 'ingredient_orders.persons', 'ingredient_orders.date', 'clients_ingredients.comment')
+        ->get();
+
+        // dd($orderSearchEtiq);
         
-    
+        
         // $totalAmounts = Ingredient::whereHas('clientsOrders', function($query) use($request){
         //     $query->where('ingredient_orders.ingredient_id', )
         // })
         
-        return view('orders.search', compact('clients', 'ingredients', 'orderSearch'));
+        return view('orders.search', compact('clients', 'ingredients', 'orderSearch', 'orderSearchEtiq'));
          
     }
 
@@ -126,6 +169,13 @@ class OrderController extends Controller
         $ingredient = Ingredient::find($request->ingredientId);
         $orderSearch = $ingredient->clientsOrders()->wherePivot('date', $request->currentDate)->wherePivot('ingredient_id', $request->ingredientId)
         ->get();
+        $newDate = $request->date;
+        $currentDate = $request->currentDate;
+        foreach ($orderSearch as $client) {
+            $ingredient->clientsOrders()->attach($client->id, ['date' => $newDate]);
+
+        }
+        return redirect()->back();
 
     }
 
@@ -141,12 +191,8 @@ class OrderController extends Controller
         $id = $request->id;
         $date = $request->date;
         $client = Ingredient::find($id);
-        dd($client);
         $client->clientsOrders()->where('date', $date)->detach();
 
         return redirect()->to('orders/');
-    }
-    public function deleteById(Request $request){
-
     }
 }

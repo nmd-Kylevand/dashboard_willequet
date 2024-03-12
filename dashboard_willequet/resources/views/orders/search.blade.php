@@ -46,7 +46,6 @@
     <th>Datum</th>
     <th>Totaal aantal personen</th>
     <th>Totale hoeveelheid</th>
-    <th>Bestelhoeveelheid</th>
   </tr>
 </thead>
 <tbody class="print:hidden">
@@ -59,7 +58,7 @@
                 <td>{{$order->clientsOrders()->sum('totalAmount')}}</td>
                
                 <td><a class="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded " href="{{ url('orders/'. $order->clientsOrders[0]->pivot->ingredient_id . '-' .request()->query('search') ) }}">Detail</a></td>
-                {{-- <td>@include('orders.partials.make-copy', ['order' => $order])</td> --}}
+                <td>@include('orders.partials.make-copy', ['order' => $order])</td>
         </tr>
 @endforeach
 </tbody>
@@ -110,19 +109,22 @@
 </ul>
 <ul id="etiquet" class="orderDetailEtiq hidden">
   <div id="etiquetDetail" class="grid grid-cols-2">
-  @foreach ($orderSearch as $client)
-    @foreach ($client->clientsOrders as $item)
-      <div class="flex flex-col w-full p-6 gap-8 ">
+  @foreach ($orderSearchEtiq as $client)
+      <div class="flex flex-col w-full p-6 gap-2 ">
         <p class="text-lg">
-          <span style="background-color: {{$item->color ?? ''}}" class="print:z-0 p-1">{{Str::upper($item->name) ?? ''}}</span>-{{$client->clientsOrders[0]->pivot->date}}<br/>{{$client->name}}
+          <span style="background-color: {{$client->color ?? ''}}" class="print:z-0 p-1">{{Str::upper($client->name) ?? ''}}</span>-{{$client->date}}<br/>{{$client->ingredientName}}
       </p>
-      <div class="flex flex-col gap-2">
+      <div class="">
         <p class="md:text-base">
-          {{$item->pivot->persons ?? 0}}
+          {{$client->persons ?? 0}}
         </p>
+        <div class="w-1/6">
+          <p class="md:text-sm bg-yellow-200">
+            {{$client->comment}}
+          </p>
+        </div>
       </div>
     </div>
-    @endforeach
   @endforeach
   <div>
 </ul>

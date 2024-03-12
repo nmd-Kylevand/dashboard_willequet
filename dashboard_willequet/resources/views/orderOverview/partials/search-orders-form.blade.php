@@ -1,7 +1,7 @@
 <div class="pt-2 relative mx-auto text-gray-600 w-1/4	">
     <form action="{{ route('orderOverview.search') }}" method="GET">
         @csrf
-        <input onfocus="this.showPicker()" class="border-2 border-gray-300 bg-white h-10 !pr-44  rounded-lg text-sm focus:outline-none"
+        <input onfocus="this.showPicker()" onchange='this.form.submit()' class="border-2 border-gray-300 bg-white h-10 !pr-44  rounded-lg text-sm focus:outline-none"
         type="date" name="search" placeholder="Search" value="{{Request::get('search')}}">
       <button type="submit" class="absolute right-0 top-0 mt-5 mr-4">
         {{-- <svg class="text-gray-600 h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg"

@@ -31,13 +31,11 @@
         <th>Naam</th>
         <th>Ingredient</th>
         <th>Aantal personen</th>
-        <th>Bakjes</th>
     </tr>
     </thead>
     <tbody class="detailOrderBody print:hidden">
         <form id="amount-form"  method="post" action="{{ route('orders.saveMultiple', ['id' => request()->client, 'date' => request()->currentDate]);}}">
         @foreach ($clientsIngredients as $client)
-            @dump($client);
             <tr>
                 <td id="printTable">
                    {{$currentClient->name ?? ''}}
@@ -66,46 +64,7 @@
                                 
                             </div>      
                     </td>
-                    <td class="text-end">{{$client->totalAmount}}</td>
-                    <td>
-                        <div>
-                                <x-input-error class="mt-2" :messages="$errors->get('category')" />
-                                <select form="amount-form" data-child-height=150 name="category[]" id="category" class="category mt-1 block w-full" autofocus>
-                                    <option
-                                    
-                                    value="{{$client->cups}}" selected>@switch($client->cups)
-                                        @case('1cup')
-                                            1 Bakje
-                                            @break
-                                        @case('2cups')
-                                            2 Bakjes
-                                            @break
-                                        @case('2cups1small1big')
-                                            3 Bakjes
-                                            @break
-                                        @case('3cups')
-                                            3 Bakjes
-                                            @break
-                                        @case('4cups')
-                                            4 Bakjes
-                                            @break
-                                        @case('6cups')
-                                            6 Bakjes
-                                            @break
-                                        @default
-                                        Kies bakjes
-
-                                    @endswitch</option>
-                                    <option value="1cup" data-image="{{ asset('/images/1cup.svg') }}">1 Bakje </option>
-                                    <option value="2cups" data-image="{{ asset('/images/2cups.svg') }}">2 Bakjes</option>
-                                    <option value="2cups1small1big" data-image="{{ asset('/images/1small1big.svg') }}">2 bakjes (1 klein - 1 groot)</option>
-                                    <option value="3cups" data-image="{{ asset('/images/3cups.svg') }}">3 bakjes</option>
-                                    <option value="4cups" data-image="{{ asset('/images/4cups.svg') }}">4 bakjes</option>
-                                    <option value="6cups" data-image="{{ asset('/images/6cups.svg') }}">6 bakjes</option>
-                                </select>   
-                            
-                        </div> 
-                    </td> 
+                  
                     
                     <td class="print:hidden">
                         {{-- <form action="{{ route('orders.delete', ['id' => request()->id, 'date' => request()->date]);}}" method="post">

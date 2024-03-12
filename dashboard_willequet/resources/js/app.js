@@ -6,7 +6,14 @@ window.Alpine = Alpine;
 
 Alpine.start();
 $(document).ready(function() {
-    $('.client_select').select2();
+    $('.client_select').select2({
+        dropdownParent: $('#createModal')
+    });
+    $('.client_select2').select2({
+        dropdownParent: $('#createModal')
+
+    });
+    $('.client_select3').select2();
 });
 
 // $('#category').ddslick({
