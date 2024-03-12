@@ -16,13 +16,14 @@ class AmountsController extends Controller
 
     public function indexDetail($id){
         $client = Client::find($id);
+        $ingredients = Ingredient::orderBy('name')->get();
         $assignedIngredients = $client->ingredients()->get();
-        $ingredients = Ingredient::all()->union($assignedIngredients)->sortDesc();
 
         // remove assigned ingredients from all ingredients list 
-        $unassignedIngredients= $ingredients->diff($assignedIngredients);
-
-        return view('amounts.detail', compact('client', 'assignedIngredients', 'unassignedIngredients'));
+        // $unassignedIngredients= $ingredients->diff($assignedIngredients);
+        
+        $allIngredients = $ingredients->merge($assignedIngredients)->paginate(50);
+        return view('amounts.detail', compact('client', 'assignedIngredients',  'allIngredients'));
     }
 
     public function assign(Request $request){

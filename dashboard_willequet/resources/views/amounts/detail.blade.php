@@ -27,9 +27,10 @@
   </tr>
 </thead>
 <tbody>
-   @foreach ($assignedIngredients as $assignedIngredient)
+   @foreach ($allIngredients as $igr)
+   {{-- @dd($ingredient->name) --}}
    <tr>
-    <td class="print:hidden ">{{$assignedIngredient->name}}</td>
+    <td class="print:hidden ">{{$igr->name}}</td>
     
     </td>
     <td class="print:hidden ">
@@ -37,20 +38,20 @@
                 @csrf
                 @method('post')
                 <div>
-                    <x-text-input id="amount" name="ingredientId" type="number" class="hidden" :value="$assignedIngredient->id"/>
+                    <x-text-input id="amount" name="ingredientId" type="number" class="hidden" :value="$igr->id"/>
                 </div>
                 <div>
                     <x-text-input id="amount" name="clientId" type="number" class="hidden" :value="$client->id"/>
                 </div>
                 <div>
                     <x-input-label for="comment" :value="__('Commentaar')" />
-                    <x-text-input id="comment" name="comment" type="text" class="mt-1 block w-full" :value="$assignedIngredient->pivot->comment"  autofocus autocomplete="name" />
+                    <x-text-input id="comment" name="comment" type="text" class="mt-1 block w-full" :value="$igr->pivot->comment ?? '' "  autofocus autocomplete="name" />
                     <x-input-error class="mt-2" :messages="$errors->get('comment')" />
                 </div>
                 <div class="mt-5">
                     <x-input-label for="amount" :value="__('Hoeveelheid')" />
                     <div class="flex">
-                    <input name="amount"  type="number" step="any"  class="mt-1 block mr-10 !w-2/4 border-gray-300  focus:border-indigo-500 focus:ring-indigo-500  rounded-md shadow-sm" value="{{$assignedIngredient->pivot->amount}}" >
+                    <input name="amount"  type="number" step="any"  class="mt-1 block mr-10 !w-2/4 border-gray-300  focus:border-indigo-500 focus:ring-indigo-500  rounded-md shadow-sm" value="{{$igr->pivot->amount ?? ""}}" >
 
                     {{-- <x-text-input id="amount"  step="any" name="amount"  type="number" class="mt-1 block !w-2/4 " :value="$assignedIngredient->pivot->amount"  autofocus autocomplete="amount" /> --}}
                     <x-input-error class="mt-2" :messages="$errors->get('amount')" />
@@ -69,46 +70,10 @@
     
 </tr> 
    @endforeach
-    @foreach ($unassignedIngredients as $ingredient)
-        <tr>
-            <td class="print:hidden ">{{$ingredient->name}}</td>
-            
-            <td class="print:hidden ">
-                 <form  method="post" action="{{ route('amounts.assign')}}">
-                        @csrf
-                        @method('post')
-                        <div>
-                            <x-text-input id="amount" name="ingredientId" type="number" class="hidden" :value="$ingredient->id"/>
-                        </div>
-                        <div>
-                            <x-text-input id="amount" name="clientId" type="number" class="hidden" :value="$client->id"/>
-                        </div>
-                        <div>
-                            <x-input-label for="comment" :value="__('Commentaar')" />
-                            <x-text-input id="comment" name="comment" type="text" class="mt-1 block w-full" :value="$client->comment"  autofocus autocomplete="name" />
-                            <x-input-error class="mt-2" :messages="$errors->get('comment')" />
-                        </div>
-                        <div class="mt-5">
-                            <x-input-label for="amount" :value="__('Hoeveelheid')" />
-                            <div class="flex">
-                                <input name="amount"  type="number" step="any"  class="mt-1 mr-10 block !w-2/4 border-gray-300  focus:border-indigo-500 focus:ring-indigo-500  rounded-md shadow-sm">
-
-                                {{-- <x-text-input id="amount" min="0.01" step="0.01" name="amount"  type="number" class="mt-1 block !w-2/4 " :value="old('amount')"  autofocus autocomplete="amount" /> --}}
-                                <x-input-error class="mt-2" :messages="$errors->get('amount')" />
-                                <button  class="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                                      </svg>
-                                      
-                                    
-                                </button>
-                            </div>
-                         
-                        </div>       
-                    </form>                                    
-            </td>
-            
-        </tr> 
-     @endforeach
+    
+     <div class="mb-5">
+        {{$allIngredients->links()}}
+    
+      </div>
 </tbody>
 @endsection
