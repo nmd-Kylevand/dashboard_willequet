@@ -146,8 +146,42 @@
     <ul class="orderDetailprint print:inline hidden">
         @foreach ($clients as $client)
         
-            <li><span style="background-color: {{$client->color ?? ''}}" class="print:z-0 ">{{Str::upper($client->name) ?? ''}}</span> <span class="numbersSpan">{{$client->cups}} totaal: {{$client->totalAmount}} {{$client->amount}}pp</span></li>
-        
+            <li>
+                <div>
+            
+                <span style="background-color: {{$client->color ?? ''}}" class="print:z-0 ">{{Str::upper($client->name) ?? ''}}</span>
+                </div>
+                <div class="mt-2 mr-2">
+                  @switch($client->cups)
+                  @case('1cup')
+                      <img class="w-4" src="{{ asset('/images/1cup.svg')}}">
+                      @break
+                  @case('2cups')
+                      <img class="w-4" src="{{ asset('/images/2cups.svg') }}">
+                      @break
+                  @case('2cups1small1big')
+                      <img class="w-4" src="{{ asset('/images/1small1big.svg') }}">
+                      @break
+                  @case('3cups')
+                      <img class="w-4" src="{{ asset('/images/3cups.svg') }}">
+                      @break
+                  @case('4cups')
+                      <img class="w-4" src="{{ asset('/images/4cups.svg') }}">
+                      @break
+                  @case('6cups')
+                      <img class="w-4" src="{{ asset('/images/6cups.svg') }}">
+                      @break
+                  @default
+                  
+            
+                @endswitch
+                </div>
+                <div>
+                  <p>totaal: {{$client->totalAmount}} {{$client->amount}}pp</span></p>
+                </div>
+             
+            
+              </li>
         @endforeach
     </ul>
 @endsection
