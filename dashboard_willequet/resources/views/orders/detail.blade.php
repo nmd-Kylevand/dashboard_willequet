@@ -75,11 +75,11 @@
                    <p style="background-color: {{$client->color ?? ''}}" id="nameColor" class="inline-block h-6 w-6 border-2 mr-4"></p><a href="/amounts/{{$client->clients_id}}"><span class="print:z-0">{{$client->name ?? ''}}</span></a>
                 </td>
                     <td class="text-center">{{$client->amount ?? ""}}</td>
-                        <td class="text-center" id="printTable">
+                        <td class="text-center  " id="printTable">
                             @csrf
                             @method('post')
                             @include('orders.partials.add-person', ['data' =>$client, 'amountPerPerson' => $client->amount ?? ''])
-                    </td> 
+                        </td> 
                     <td class="text-end">{{$client->totalAmount}}</td>
                     <td>
                         <div>
@@ -148,7 +148,7 @@
         
             <li>
                 <div>
-            
+                    {{$client->persons ?? 0}}
                 <span style="background-color: {{$client->color ?? ''}}" class="print:z-0 ">{{Str::upper($client->name) ?? ''}}</span>
                 </div>
                 <div class="mt-2 mr-2">
@@ -177,7 +177,7 @@
                 @endswitch
                 </div>
                 <div>
-                  <p>totaal: {{$client->totalAmount}} {{$client->amount}}pp</span></p>
+                  <p>totaal: {{$client->totalAmount}} {{number_format($client->amount, 3, '.', ','); }}pp</span></p>
                 </div>
              
             

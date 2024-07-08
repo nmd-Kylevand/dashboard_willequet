@@ -32,7 +32,7 @@
                     @method('post')
                     <div>
                         <x-input-label for="date" :value="__('Datum')" />
-                        <x-text-input id="date" name="date" type="date" class="mt-1 block w-full" :value="request()->query('search')"  autofocus autocomplete="date" />
+                        <x-text-input  onfocus="this.showPicker()" required id="date" name="date" type="date" class="mt-1 block w-full" :value="request()->query('search')"  autofocus autocomplete="date" />
                         <x-input-error class="mt-2" :messages="$errors->get('date')" />
                     </div>
             

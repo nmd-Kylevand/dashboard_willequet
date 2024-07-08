@@ -43,17 +43,27 @@
                             <x-text-input id="amount" name="clientId" type="number" class="hidden" :value="$client->id"/>
                         </div>
 
-                        <div class="justify-end  flex	">
-                            <x-text-input id="amount" max=500 step=0.001  name="amount"  type="number" class="mt-1 block w-1/4 mr-5" :value="old('amount')"  autofocus autocomplete="amount" />
-                            <x-input-error class="mt-2" :messages="$errors->get('amount')" />
-                            <button  class="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                                  </svg>
-                                  
+                        <div>
+                          <x-input-label for="comment" :value="__('Commentaar')" />
+                          <x-text-input id="comment" name="comment" type="text" class="mt-1 block w-full" :value="$ingredient->pivot->comment ?? '' "  autofocus autocomplete="name" />
+                          <x-input-error class="mt-2" :messages="$errors->get('comment')" />
+                      </div>
+                      <div class="mt-5">
+                          <x-input-label for="amount" :value="__('Hoeveelheid')" />
+                          <div class="flex">
+                          <input name="amount"  type="number" step="any"  class="mt-1 block mr-10 !w-2/4 border-gray-300  focus:border-indigo-500 focus:ring-indigo-500  rounded-md shadow-sm" value="{{$ingredient->pivot->amount ?? ""}}" >
+      
+                          <x-input-error class="mt-2" :messages="$errors->get('amount')" />
+                          <button  class="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded">
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                                </svg>
                                 
-                            </button>
-                        </div>       
+                              
+                          </button>
+                          </div>
+                          
+                      </div>       
                     </form>                                    
             </td>
             

@@ -8,6 +8,8 @@
         print-color-adjust: exact;
         
     }
+    h1 { 
+      }
     tr{
         border: none;
         width: 100px!important;
@@ -35,6 +37,8 @@
     #orderDetailTitle{
         display: inline;
         font-size: 1.6em;
+        page-break-before: always;
+
     }
     
     .orderDetailprint {
@@ -77,4 +81,7 @@
     .showEtiq{
         display: inline;
     }
+   
+
+ 
 }

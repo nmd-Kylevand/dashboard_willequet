@@ -28,7 +28,6 @@
 </thead>
 <tbody>
    @foreach ($allIngredients as $igr)
-   {{-- @dd($ingredient->name) --}}
    <tr>
     <td class="print:hidden ">{{$igr->name}}</td>
     

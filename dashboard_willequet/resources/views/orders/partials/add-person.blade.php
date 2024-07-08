@@ -11,8 +11,9 @@
     <div>
         <x-text-input id="date" name="date" type="date" class="hidden" :value="$data->date ?? ''"/>
     </div>
-    <div class="justify-end  flex	">
-        <x-text-input id="amount" min="1" step="1" name="persons[]"  type="number" class="mt-1 block w-1/4 mr-5" :value="$data->persons"  autofocus autocomplete="persons" />
+    <div class=" justify-center flex">
+        <x-text-input  id="amount" min="1" step="1" name="persons[]"  type="number" class="mt-1 block w-2/4 mr-5" :value="$data->persons"  autofocus autocomplete="persons" />
         <x-input-error class="mt-2" :messages="$errors->get('persons')" />
         
     </div>       
+ 

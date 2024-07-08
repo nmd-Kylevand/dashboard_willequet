@@ -38,18 +38,21 @@ class AmountsController extends Controller
         }
         $client->ingredients()->attach($ingredientId, ['amount' => $request->amount, 'comment' => $comment ?? ""]);
 
-        return redirect()->to('amounts/'.$clientId);
-
+        // return redirect()->to('amounts/'.$clientId);
+        return redirect()->back();
         
     }
 
     public function search(Request $request){
         $client = Client::find($request->clientId);
+        $ingredients = Ingredient::orderBy('name')->where('name','like','%'.$request->search.'%')->get();
 
-        $ingredientSearch = Ingredient::where('name','like','%'.$request->search.'%')->get();
-    
+        $assignedIngredients = $client->ingredients()->where('name','like','%'.$request->search.'%')->get();
+        // $ingredientSearch = Ingredient::where('name','like','%'.$request->search.'%')->get();
+        $allIngredients = $ingredients->merge($assignedIngredients)->paginate(50);
+
             return view('amounts.search', [
-                'ingredientSearch' => $ingredientSearch,
+                'ingredientSearch' => $allIngredients,
                 'client' => $client
             ]);
          
