@@ -1,7 +1,7 @@
 @extends('layouts.table-layout')
 @section('title')
     <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-        Aantallen van {{$currentClient->name}}
+        {{-- Aantallen van {{$currentClient->name}} --}}
     </h2>
 @endsection
 @section('goBack')
@@ -35,31 +35,31 @@
     </thead>
     <tbody class="detailOrderBody print:hidden">
         <form id="amount-form"  method="post" action="{{ route('orders.saveMultiple', ['id' => request()->client, 'date' => request()->currentDate]);}}">
-        @foreach ($clientsIngredients as $client)
+        @foreach ($clients as $client)
             <tr>
-                <td id="printTable">
-                   {{$currentClient->name ?? ''}}
-                </td>
-                <td>
+                <td class="text-center" id="printTable">
                     {{$client->name}}
                 </td>
-                <td id="printTable">
+                <td class="text-center">
+                    {{$client->ingredientName}}
+                </td>
+                <td class="text-center" id="printTable">
                             @csrf
                             @method('post')
                             <div>
-                                <x-text-input id="ingredientId" name="ingredientId[]" type="number" class="hidden" :value="$client->id ?? ''"/>
+                                <x-text-input id="ingredientId" name="ingredientId[]" type="number" class="hidden" :value="$client->ingredients_id ?? ''"/>
                             </div>
                             <div>
-                                <x-text-input id="clientId" name="clientId" type="number" class="hidden" :value="$currentClient->id ?? ''"/>
+                                <x-text-input id="clientId" name="clientId[]" type="number" class="hidden" :value="$client->clients_id ?? ''"/>
                             </div>
                             <div>
-                                <x-text-input id="amountPerPerson" name="amountPerPerson[]" type="number" class="hidden" :value="$amountPerPerson ?? ''"/>
+                                <x-text-input id="amountPerPerson" name="amountPerPerson[]" type="number" class="hidden" :value="$client->totalAmount ?? ''"/>
                             </div>
                             <div>
-                                <x-text-input id="date" name="date" type="date" class="hidden" :value="$client->pivot->persons->date ?? ''"/>
+                                <x-text-input id="date" name="date" type="date" class="hidden" :value="$client->date ?? ''"/>
                             </div>
-                            <div class="justify-end  flex	">
-                                <x-text-input id="amount" min="1" step="1" name="persons[]"  type="number" class="mt-1 block w-1/4 mr-5" :value="$client->pivot->persons"  autofocus autocomplete="persons" />
+                            <div class="justify-center  flex	">
+                                <x-text-input id="amount" min="1" step="1" name="persons[]"  type="number" class="mt-1 block w-1/4 mr-5" :value="$client->persons"  autofocus autocomplete="persons" />
                                 <x-input-error class="mt-2" :messages="$errors->get('persons')" />
                                 
                             </div>      

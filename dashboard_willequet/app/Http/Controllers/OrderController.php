@@ -82,63 +82,115 @@ class OrderController extends Controller
     }
 
     public function saveMultiple(Request $request){
-        $client = Client::find($request->clientId);
-        $ingredientArr = $request->ingredientId;
-        $amounts = $request->persons;
+        
+    
+        $clientIds = $request->clientId; // Array of client IDs
+        $ingredientArr = $request->ingredientId; // Array of arrays of ingredient IDs
+        $amounts = $request->persons; // Array of arrays of amounts
         $date = $request->date;
-        $cups = $request->category;
-        for($counter = 0; $counter < count($ingredientArr); $counter++){
-            DB::table('ingredient_orders')
-                ->where('clients_id', $request->clientId)
-                ->where('ingredient_id', $ingredientArr[$counter])
-                ->update(['persons' => $amounts[$counter]]);
+
+        for ($counter = 0; $counter < count($clientIds); $counter++) {
+            $clientId = $clientIds[$counter];
+            $ingredients = $ingredientArr[$counter];
+            $persons = $amounts[$counter];
+            for ($innerCounter = 0; $innerCounter < count($ingredientArr); $innerCounter++) {
+                $ingredient = Ingredient::find($ingredients);
+
+    
+                // Check if an ingredient order exists for the given client and date
+                $ingredientOrder = DB::table('ingredient_orders')
+                    ->where('clients_id', $clientId)
+                    ->where('ingredient_id', $ingredients[$innerCounter])
+                    ->where('date', $date)
+                    ->first();
+    
+                if ($ingredientOrder) {
+                    // Update the existing ingredient order
+                    $ingredients->clientsOrders()->attach($clientId,['persons' => $persons, 'date' => $request->date]);
+
+                } 
+                
+            }
         }
-       
 
         return redirect()->back();
 
     }
 
-    public function create(Request $request){
+    
+    public function create(Request $request) {
         $clientId = $request->client;
         $ingredientId = $request->ingredient;
         $category = $request->categories;
         $date = $request->date;
+    
+        $client = Client::with('ingredients')->find($clientId);
+    
 
-        $client = Client::find($clientId);
-        
         $ingredient = Ingredient::find($ingredientId);
         $clientIngr = $ingredient->clients()->get();
         
-        // if($ingredient->clientsOrders->contains('id', $clientId)){
-        //     $client = Client::find($clientId);
-        //     $duplicatedClient = $client->replicate();
-        //     $duplicatedClient->name = $client->name . ' (2)';
-        //     dd($duplicatedClient)
-        // }
-        // if($ingredient->clientsOrders()->contains())
 
-        if($category){
-            $categorizedClients = Client::where('category', $category)->get();
-            foreach ($categorizedClients as $client) {
-                if($clientIngr->contains('name',$client->name)){
-                    $ingredient->clientsOrders()->attach($client->id, ['date' => $request->date]);
+        // Extract the base name without suffixes
+        $originalName = preg_replace('/\s\(\d+\)$/', '', $client->name);
+    
+        // Fetch all clients with similar base names
+        $similarClients = Client::where('name', 'LIKE', "$originalName%")->get();
+    
+        // Initialize the highest suffix to 1
+        $highestSuffix = 2;
+    
+        // Iterate through similar client names to find the highest suffix
+        foreach ($similarClients as $similarClient) {
+            $name = $similarClient->name;
+    
+            // Check if the name is the original name
+            if ($name == $originalName) {
+                continue;
+            }
+    
+            // Use regex to find the suffix in the form "clientName (X)"
+            if (preg_match('/\((\d+)\)$/', $name, $matches)) {
+                $suffix = (int)$matches[1];
+                if ($suffix >= $highestSuffix) {
+                    $highestSuffix = $suffix + 1;
                 }
             }
-        } else{
-            if($clientIngr->contains('name',$client->name)){
-                $ingredient->clientsOrders()->attach($clientId, ['date' => $request->date]);
-                return redirect()->to('orders/'.$ingredientId.'-'.$date);
-            }else{
-                return redirect()->to('orders/'.$ingredientId.'-'.$date)->withErrors(['msg' => 'De geselecteerde klant heeft nog geen gemiddeld aantal voor dit ingrediënt, gelieve dit eerst toe te voegen.']);
-    
-            };    
         }
-        return redirect()->to('orders/'.$ingredientId.'-'.$date);
-
     
+        // Create the new client name for the duplicate
+        $newClientName = $originalName . " ($highestSuffix)";
+    
+        // Duplicate the client and set the new name
+        $duplicatedClient = $client->duplicate();
+        $duplicatedClient->name = $newClientName;
+
+      
+        // Save the new duplicated client
+        $duplicatedClient->save();
+
+        // Handle category-specific logic if a category is provided
+        if ($category) {
+            $categorizedClients = Client::where('category', $category)->get();
+            foreach ($categorizedClients as $client) {
+                if ($clientIngr->contains('name', $client->name)) {
+                    $ingredient->clientsOrders()->attach($client->id, ['date' => $date]);
+                }
+            }
+        } else {
+            if ($clientIngr->contains('name', $client->name)) {
+                $ingredient->clientsOrders()->attach($clientId, ['date' => $date]);
+                return redirect()->to('orders/' . $ingredientId . '-' . $date);
+            } else {
+                return redirect()->to('orders/' . $ingredientId . '-' . $date)
+                    ->withErrors(['msg' => 'De geselecteerde klant heeft nog geen gemiddeld aantal voor dit ingrediënt, gelieve dit eerst toe te voegen.']);
+            }
+        }
+    
+        // Redirect to the orders page
+        return redirect()->to('orders/' . $ingredientId . '-' . $date);
     }
-        
+    
     
 
     public function search(Request $request){
@@ -150,27 +202,7 @@ class OrderController extends Controller
             $query->where('date','=',$request->search);
         })
         ->get();
-        // $orderSearch = Ingredient::with(['clientsOrders' => function($query) use ($request){
-        //     $query->wherePivot('ingredient_orders.date', $request->search);
-        // }])->get();
-        // dump($orderSearch);
-        // ->get();
-        // $orderSearch = Ingredient::all()->clientsOrders->wherePivot('date', $request->currentDate)->wherePivot('ingredient_id', $request->ingredientId)
-        // ->get();
-
-        // $ingredients = Ingredient::with('clientsOrders')->clientOders()->get();
-        // dd($ingredients);
        
-//         $ingredientIds = DB::table('ingredient_orders')
-//         ->where('date', $request->search)
-//         ->pluck('ingredient_id');
-
-//         $ingredientMany = Ingredient::findMany([$ingredientIds]);
-        
-//         foreach ($ingredientMany as $id) {
-//             $orderSearch = $id->clientsOrders()->wherePivot('date', $request->search)->get();
-//             dump($orderSearch);
-//         }
         
 
 // Step 1: Query to get all clients for each ingredient
@@ -231,15 +263,25 @@ $formattedResults = $groupedResults->map(function ($clients, $ingredientName) {
         // dd($orderSearch);
         $orderSearchEtiq = DB::table('ingredient_orders')
         ->where('date', $request->search)
-        ->join('clients','ingredient_orders.clients_id','=','clients.id')
+        ->join('clients', 'ingredient_orders.clients_id', '=', 'clients.id')
         ->join('ingredients', 'ingredient_orders.ingredient_id', '=', 'ingredients.id')
-        ->rightJoin('clients_ingredients', function($join){
+        ->rightJoin('clients_ingredients', function($join) {
             $join->on('ingredient_orders.clients_id', '=', 'clients_ingredients.clients_id');
             $join->on('ingredient_orders.ingredient_id', '=', 'clients_ingredients.ingredients_id');
         })
         ->select('clients.name', 'clients.color', 'ingredients.name AS ingredientName', 'ingredient_orders.persons', 'ingredient_orders.date', 'clients_ingredients.comment', 'ingredient_orders.totalAmount', 'ingredient_orders.cups', 'clients_ingredients.amount', 'ingredient_orders.persons')
-        ->orderBy('clients.color', 'asc') 
-        ->orderBy('clients.name', 'asc') 
+        ->orderByRaw("
+            CASE 
+                WHEN clients.color = '#F7FAFC' THEN 1
+                WHEN clients.color = '#45CEE6' THEN 2
+                WHEN clients.color = '#6FE21B' THEN 3
+                WHEN clients.color = '#E655CA' THEN 4
+                WHEN clients.color = '#C93434' THEN 5
+                WHEN clients.color = '#E7F05A' THEN 6
+                ELSE 7
+            END
+        ")
+        ->orderBy('clients.name', 'asc')
         ->get();
 
         
@@ -268,11 +310,21 @@ $formattedResults = $groupedResults->map(function ($clients, $ingredientName) {
     }
 
     public function searchAmounts(Request $request){
-        
-        $currentClient = Client::find($request->client);
-        $clientsIngredients = $currentClient->ingredientOrders()->where('date', $request->currentDate)->get();
-
-        return view('orders.client-amount', compact('clientsIngredients', 'currentClient'));
+      
+    $clients = DB::table('ingredient_orders')
+    ->join('clients', 'ingredient_orders.clients_id', '=', 'clients.id')
+    ->join('ingredients', 'ingredient_orders.ingredient_id', '=', 'ingredients.id')
+    ->rightJoin('clients_ingredients', function($join) {
+        $join->on('ingredient_orders.clients_id', '=', 'clients_ingredients.clients_id');
+        $join->on('ingredient_orders.ingredient_id', '=', 'clients_ingredients.ingredients_id');
+    })
+    ->where('ingredient_orders.date', $request->currentDate)
+    ->where('clients.name', 'LIKE', "{$request->client}%")
+    ->select('clients.name', 'ingredient_orders.clients_id','clients_ingredients.ingredients_id', 'clients.color', 'ingredients.name AS ingredientName', 'ingredient_orders.persons', 'ingredient_orders.date', 'clients_ingredients.comment', 'ingredient_orders.totalAmount', 'ingredient_orders.cups', 'clients_ingredients.amount', 'ingredient_orders.persons')
+    ->orderBy('clients.color', 'asc')
+    ->orderBy('clients.name', 'asc')
+    ->get();
+        return view('orders.client-amount', compact('clients'));
     }
 
     public function delete(Request $request){

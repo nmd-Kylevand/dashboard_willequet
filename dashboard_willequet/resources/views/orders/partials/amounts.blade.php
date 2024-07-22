@@ -33,7 +33,8 @@
                     <select name="client" class="client_select3" style="width: 100%;" id="client" class="mt-1  !w-full border-gray-300  focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm'" autofocus>
                         <option value="" disabled selected>Kies een klant</option>
                         @foreach ($clients as $client)
-                            <option value="{{$client->id}}">{{$client->name}}</option>
+                        
+                            <option value="{{$client->name}}">{{$client->name}}</option>
                         @endforeach
                         
                     </select>   

@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
 {
+    use \Bkwld\Cloner\Cloneable;
     use HasFactory;
-
     protected $fillable = [
         'color',
         'name',
@@ -19,7 +19,9 @@ class Client extends Model
         'telephone',
         'category'
     ];
-    
+
+    protected $cloneable_relations = ['ingredients'];
+
     public function ingredients()
     {
         return $this->belongsToMany(Ingredient::class, 'clients_ingredients', 'clients_id', 'ingredients_id')->withPivot('amount','comment')->withTimestamps();

@@ -1,0 +1,5 @@
+{
+    "require": {
+        "bkwld/cloner": "^3.12"
+    }
+}
