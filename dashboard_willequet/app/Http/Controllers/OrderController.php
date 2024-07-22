@@ -35,6 +35,7 @@ class OrderController extends Controller
         ->orderBy('clients.color')
         ->get();
         
+    
         return view('orders.detail', compact('clients','ingredientForForm', 'clientsForForm'));
     }
 
@@ -157,7 +158,22 @@ class OrderController extends Controller
                 }
             }
         }
-    
+        
+        if($client->name == $originalName){
+            
+                // Create the new client name for the duplicate
+            $newClientName = $originalName . " ($highestSuffix)";
+        
+            // Duplicate the client and set the new name
+            $duplicatedClient = $client->duplicate();
+            $duplicatedClient->name = $newClientName;
+        
+            // Save the new duplicated client
+            $duplicatedClient->save();
+            $ingredient->clientsOrders()->attach($duplicatedClient->id, ['date' => $date]);
+
+            return redirect()->to('orders/' . $ingredientId . '-' . $date);
+        }
         // Create the new client name for the duplicate
         $newClientName = $originalName . " ($highestSuffix)";
     
@@ -190,6 +206,9 @@ class OrderController extends Controller
         // Redirect to the orders page
         return redirect()->to('orders/' . $ingredientId . '-' . $date);
     }
+    
+  
+    
     
     
 
