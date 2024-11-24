@@ -1,4 +1,8 @@
 @media print {
+    @page {
+        margin-top: 5mm; /* Add padding to the top of every new page */
+    }
+
     #bg{
         background-color: white !important;
     }
@@ -8,8 +12,7 @@
         print-color-adjust: exact;
         
     }
-    h1 { 
-      }
+    
     tr{
         border: none;
         width: 100px!important;
@@ -72,16 +75,48 @@
         margin-left: 10px;
     }
     
+    /* #etiquet{
+        width: 21cm;
+        height: 29.7cm; 
+        display: flex;
+        flex-wrap: wrap;
+        page-break-after: always;
+    } */
+     /* .sticker {
+       background-color: red;
+      } */
+      /* .sticker span {
+        display: block;
+        word-wrap: break-word;
+      }
     #etiquet h1{
         font-size: 25rem;
-    }
+    } */
+    .sticker {
+        height: 39mm !important;
+        width: 104mm !important;
+        font-size: 20px;
+        padding-top: 5mm;
+        padding-left: 2mm;
+      }
+    
+      /* Ensure grid layout works properly in print */
+      #etiquetDetail {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+      }
+    
     .hideEtiq{
         display: none !important;
     }
     .showEtiq{
         display: inline;
     }
-   
+    .page-break {
+        page-break-after: always;
+
+    }
+
 
  
 }

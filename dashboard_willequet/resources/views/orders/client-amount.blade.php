@@ -53,14 +53,19 @@
                                 <x-text-input id="clientId" name="clientId[]" type="number" class="hidden" :value="$client->clients_id ?? ''"/>
                             </div>
                             <div>
-                                <x-text-input id="amountPerPerson" name="amountPerPerson[]" type="number" class="hidden" :value="$client->totalAmount ?? ''"/>
+                                <x-text-input id="amountPerPerson" name="amountPerPerson[]" type="number" class="hidden" :value="$client->amount ?? 0"/>
+                            </div>
+                            <div>
+                                <x-text-input id="cups" name="cups[]" class="hidden" :value="$client->cups ?? 0"/>
+                            </div>
+                            <div>
+                                <x-text-input id="ingOrdId" name="ingOrdId[]" type="number" class="hidden" :value="$client->ingrOrdID"/>
                             </div>
                             <div>
                                 <x-text-input id="date" name="date" type="date" class="hidden" :value="$client->date ?? ''"/>
                             </div>
                             <div class="justify-center  flex	">
                                 <x-text-input id="amount" min="1" step="1" name="persons[]"  type="number" class="mt-1 block w-1/4 mr-5" :value="$client->persons"  autofocus autocomplete="persons" />
-                                <x-input-error class="mt-2" :messages="$errors->get('persons')" />
                                 
                             </div>      
                     </td>

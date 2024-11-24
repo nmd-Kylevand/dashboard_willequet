@@ -21,6 +21,6 @@ class Ingredient extends Model
 
     public function clientsOrders()
     {
-        return $this->belongsToMany(Client::class, 'ingredient_orders', 'ingredient_id', 'clients_id')->withPivot('date', 'amountPerPerson', 'persons', 'totalAmount', 'cups')->withTimestamps();
+        return $this->belongsToMany(Client::class, 'ingredient_orders', 'ingredient_id', 'clients_id')->withPivot('id','date', 'amountPerPerson', 'persons', 'totalAmount', 'cups')->withTimestamps();
     }
 }

@@ -72,9 +72,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/search/amounts',[OrderController::class, 'searchAmounts'])->name('.searchAmounts');
         Route::post('/search', [OrderController::class,'copy'])->name('.copy');
         Route::post('/', [OrderController::class, 'create'])->name('.create');
+        Route::post('/{id}-{date}/copy', [OrderController::class, 'copyIndividual'])->name('.copyIndividual');
         Route::post('/{id}-{date}', [OrderController::class, 'save'])->name('.save');
         Route::post('client/{id}-{date}', [OrderController::class, 'saveMultiple'])->name('.saveMultiple');
         Route::get('/{id}-{date}', [OrderController::class, 'orderDetail'])->name('.detail');
+        // Route::post('/{id}-{date}', [OrderController::class, 'copyIndividual'])->name('.copyIndividual');
         Route::delete('/{id}-{date}', [OrderController::class, 'delete'])->name('.delete');
         Route::delete('/{id}->{date}', [OrderController::class, 'deleteById'])->name('.deleteById');
     });

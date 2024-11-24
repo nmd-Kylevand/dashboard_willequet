@@ -13,6 +13,10 @@ $(document).ready(function() {
         dropdownParent: $('#createModal')
 
     });
+    $('.select').select2({
+        dropdownParent: $('#copy1Modal')
+
+    });
     $('.client_select3').select2();
 });
 

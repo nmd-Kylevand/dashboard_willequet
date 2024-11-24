@@ -14,4 +14,10 @@ tr{
       @apply p-3;
     }
   }
+  .select2-search-choice{
+    width:100%
+  }
   
+  .select2-container-multi .select2-choices {
+      overflow: inherit;
+  }
